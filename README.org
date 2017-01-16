@@ -4,8 +4,8 @@
                   :update {:stagger      "30s"
                            :max-parallel 1}
                   [:group "load-balancers"]
-                  [{:count 1}
-                   {:restart {:attempts 10}}]}}))
+                  {:count 1
+                   :restart {:attempts 10}}}}))
 #+END_SRC
 
 =>
@@ -19,15 +19,11 @@ job "build" {
       stagger = "30s"
       max-parallel = 1
   }
-  group "load-balancers" = [
-      {
-            count = 1
-      },
-      {
-            restart {
-                    attempts = 10
-            }
+  group "load-balancers" {
+      count = 1
+      restart {
+            attempts = 10
       }
-  ]
+  }
 }
 #+END_SRC
