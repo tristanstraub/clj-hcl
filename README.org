@@ -1,0 +1,33 @@
+#+BEGIN_SRC clojure
+(print (h/emit '{[:job "build"]
+                 {:datacenters ["ap-southeast-2"]
+                  :update {:stagger      "30s"
+                           :max-parallel 1}
+                  [:group "load-balancers"]
+                  [{:count 1}
+                   {:restart {:attempts 10}}]}}))
+#+END_SRC
+
+=>
+
+#+BEGIN_SRC nginx
+job "build" {
+  datacenters = [
+      "ap-southeast-2"
+  ]
+  update {
+      stagger = "30s"
+      max-parallel = 1
+  }
+  group "load-balancers" = [
+      {
+            count = 1
+      },
+      {
+            restart {
+                    attempts = 10
+            }
+      }
+  ]
+}
+#+END_SRC

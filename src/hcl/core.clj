@@ -1,7 +1,5 @@
 (ns hcl.core
-  (:use [midje.sweet]
-        [clojure.test :refer [with-test]]
-        [clojure.core.match :refer [match]])
+  (:use [clojure.core.match :refer [match]])
   (:require [clojure.string :as str]))
 
 (def default-indent "  ")
