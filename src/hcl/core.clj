@@ -32,9 +32,18 @@
                 (->> value
                      (map (kv #(format "%s %s\n"
                                        (cond (vector? %1)
-                                             (case (count %1)
-                                               1 (apply format "%s" (name %1))
-                                               2 (apply format "%s \"%s\"" (map name %1)))
+                                             (match %1
+                                               [::dup k _]
+                                               (cond (vector? k)
+                                                     (case (count k)
+                                                       1 (apply format "%s" (name k))
+                                                       2 (apply format "%s \"%s\"" (map name k)))
+                                                     :else       (name k))
+
+                                               :else
+                                               (case (count %1)
+                                                 1 (apply format "%s" (name %1))
+                                                 2 (apply format "%s \"%s\"" (map name %1))))
                                              :else
                                              (name %1))
                                        (cond (map? %2)
@@ -52,3 +61,10 @@
               (quote-string value)
               :else
               (str value))))
+
+(def id (atom 0))
+(defn unique! []
+  (swap! id inc))
+
+(defn dupk [k]
+  [::dup k (unique!)])
