@@ -1,3 +1,9 @@
+* Running tests
+
+Run tests: clj -A:test
+
+* Example
+
 #+BEGIN_SRC clojure
 (print (h/emit '{[:job "build"]
                  {:datacenters ["ap-southeast-2"]
